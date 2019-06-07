@@ -1,6 +1,6 @@
 import pytest
 
-from src.helpers import parse, read_header, read_data
+from manager.helpers import parse, read_header, read_data
 
 @pytest.fixture(params=[
   ('a', 'a'),

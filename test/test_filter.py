@@ -1,7 +1,7 @@
 import pytest
 import os
 
-from src.filter import filter_cities_by_population, filter_alternate_names_for_cities
+from manager.filter import filter_cities_by_population, filter_alternate_names_for_cities
 
 def test_filter_cities_by_population(test_data_files):
 	cities = filter_cities_by_population(100000, data_files=test_data_files)
