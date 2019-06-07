@@ -1,6 +1,6 @@
 from .helpers import load, default_data_files
 
-def merge_city_data(city, data_files=default_data_files()):
+def merge_city_data(city, alternate_names, data_files=default_data_files()):
 	geonameid = city['geonameid']
 	name = city['name']
 	countrycode = city['country code']
@@ -13,7 +13,7 @@ def merge_city_data(city, data_files=default_data_files()):
 	language = languages[0][:2]
 	def is_local_name(name):
 		return name['geonameid'] == geonameid and name['isolanguage'] == language
-	local_names = load('alternate_names', where=is_local_name)
+	local_names = list(filter(is_local_name, alternate_names))
 	local_name = None
 	if len(local_names) > 0:
 		local_name = local_names[0]
