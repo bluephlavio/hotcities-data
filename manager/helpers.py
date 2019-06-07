@@ -1,5 +1,8 @@
 import csv
 import os
+import sys
+
+# csv.field_size_limit(sys.maxsize)
 
 def parse(value):
   try:
@@ -17,7 +20,7 @@ def read_header(filename):
 def read_data(data_file, header_file, where=None):
   fields = read_header(header_file);
   with open(data_file, encoding='utf-8') as f:
-    reader = csv.DictReader(f, fieldnames=fields, dialect='excel-tab')
+    reader = csv.DictReader(f, fieldnames=fields, dialect='excel-tab', quoting=csv.QUOTE_NONE)
     rows = []
     for data in reader:
       row = {}
