@@ -20,8 +20,12 @@ def test_read_header(header_file):
     assert field == list(['a', 'b', 'c'])[i]
 
 def test_read_data(data_file, header_file):
-  data = read_data(data_file, header_file)
-  for i, row in enumerate(data):
+  rows = read_data(data_file, header_file)
+  for i, row in enumerate(rows):
     assert row['a'] == 3 * i + 1
     assert row['b'] == 3 * i + 2
     assert row['c'] == 3 * i + 3
+
+def test_read_filtered_data(data_file, header_file):
+  rows = read_data(data_file, header_file, lambda data: print(data['a'])
+  assert len(rows) == 1
