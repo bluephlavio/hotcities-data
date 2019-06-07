@@ -1,4 +1,5 @@
 import csv
+import os
 
 def parse(value):
   try:
@@ -22,3 +23,13 @@ def read_data(data_file, header_file):
       for field in fields:
         row[field] = parse(row[field])
     return data
+
+def data_dir():
+  here = os.path.abspath(os.path.dirname(__file__))
+  return os.path.join(here, '..', 'data')
+
+def load_cities():
+  cities_file = os.path.join(data_dir(), 'cities15000.txt')
+  header_file = os.path.join(data_dir(), 'citiesHeader.txt')
+  cities = read_data(cities_file, header_file)
+  return cities
