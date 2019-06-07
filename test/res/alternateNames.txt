@@ -1,0 +1,41 @@
+202765	290594		Umm al Qaiwain						
+202766	290594		Um al Quweim						
+202767	290594		Yumul al Quwain						
+202768	290594		Umm al Qawain						
+3057621	290594	link	https://ru.wikipedia.org/wiki/%D0%A3%D0%BC%D0%BC-%D0%90%D0%BB%D1%8C-%D0%9A%D1%83%D0%B2%D0%B5%D0%B9%D0%BD_%28%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%29						
+5724365	290594		Umm al Qaywayn						
+5724366	290594	ar	أم القيوين						
+7911399	290594	ru	Умм-эль-Кайвайн	1					
+9530303	290594	fr	Oumm al Qaïwaïn						
+9530304	290594	en	Umm al-Quwain						
+9530305	290594	link	https://en.wikipedia.org/wiki/Umm_al-Quwain						
+10003186	290594		Um al Kawain						
+13722433	290594	unlc	AEQIW						
+15897245	290594	wkdt	Q2788830						
+16340764	290594	en	Umm Al Quwain City						
+16340765	290594	ar	مدينة ام القيوين	
+203108	291074		Julfa				1		
+203109	291074		Ras al Khaimah						
+203110	291074		Khaimah						
+2922540	291074	link	https://en.wikipedia.org/wiki/Ras_al-Khaimah						
+3057623	291074	link	https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81-%D0%90%D0%BB%D1%8C-%D0%A5%D0%B0%D0%B9%D0%BC%D0%B0_%28%D1%8D%D0%BC%D0%B8%D1%80%D0%B0%D1%82%29						
+5724367	291074		Ra’s al Khaymah						
+5724368	291074	ar	رأس الخيمة						
+7911400	291074	ru	Рас-эль-Хайма	1					
+7948640	291074	sv	Ras al Khaimah	1					
+8514254	291074	iata	RKT						
+8514255	291074	en	Ras al-Khaimah	1					
+9709053	291074	de	Ra’s al-Chaima	1					
+9709054	291074	fr	Ras el Khaïmah	1					
+11170785	291074	en	Ras el-Kheima						
+13722437	291074	unlc	AERKT						
+15872104	291074	wkdt	Q2126436						
+16327977	291074		RAK City						
+16340762	291074	en	Ras Al Khaimah City						
+16340763	291074	ar	مدينة رأس الخيمة	
+203467	291580		Bid’ Zayed						
+203468	291580		Madīnat Zā’id						
+4470962	291580		Madīnat Zāyid						
+13668652	291580	link	https://en.wikipedia.org/wiki/Madinat_Zayed						
+16340756	291580	en	Zayed City						
+16340757	291580	ar	مدينة زايد	

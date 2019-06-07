@@ -14,3 +14,19 @@ def header_file(res_dir):
 @pytest.fixture(scope='session')
 def data_file(res_dir):
   return os.path.join(res_dir, 'data.txt')
+
+@pytest.fixture
+def cities_file(res_dir):
+	return os.path.join(res_dir, 'cities.txt')
+
+@pytest.fixture
+def cities_header_file(res_dir):
+	return os.path.join(res_dir, 'citiesHeader.txt')
+
+@pytest.fixture
+def alternate_names_file(res_dir):
+	return os.path.join(res_dir, 'alternateNames.txt')
+
+@pytest.fixture
+def alternate_names_header_file(res_dir):
+	return os.path.join(res_dir, 'alternateNamesHeader.txt')

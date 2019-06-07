@@ -27,5 +27,9 @@ def test_read_data(data_file, header_file):
     assert row['c'] == 3 * i + 3
 
 def test_read_filtered_data(data_file, header_file):
-  rows = read_data(data_file, header_file, lambda data: print(data['a'])
-  assert len(rows) == 1
+  rows = read_data(data_file, header_file, lambda row: row['a'] != 1)
+  assert len(rows) == 2
+  for i, row in enumerate(rows):
+    assert row['a'] == 3 * i + 4
+    assert row['b'] == 3 * i + 5
+    assert row['c'] == 3 * i + 6
