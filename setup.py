@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='manager',
+    name='hotcitiesdata',
     version='0.0.1',
     description='hotcities-data manager utils and scripts',
     author='Flavio Grandin',
@@ -10,7 +10,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'manager=manager.cli:main',
+            'hotcitiesdata=hotcitiesdata.cli:main',
         ],
     },
     setup_requires=['pytest-runner', ],

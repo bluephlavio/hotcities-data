@@ -27,7 +27,7 @@ def merge_city_data(city, countries, alternatenames):
 	localnames = list(filter(is_local_alternatename(geonameid, lang), alternatenames))
 	localname = None
 	if len(localnames) > 0:
-		localname = localnames[0]
+		localname = localnames[0]['alternate name']
 	countryname = country['Country']
 	return {
 		'geonameid': geonameid,
