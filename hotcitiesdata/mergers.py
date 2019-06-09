@@ -1,17 +1,19 @@
+from collections import OrderedDict
+
 from .filters import is_local_alternatename
 
-merged_cities_data_fields = {
+merged_cities_data_fields = [
 	'geonameid',
 	'name',
 	'localname',
+	'population',
 	'countryname',
 	'countrycode',
 	'timezone',
-	'population',
-	'lang',
 	'lng',
-	'lat'
-}
+	'lat',
+	'lang'
+]
 
 def merge_city_data(city, countries, alternatenames):
 	geonameid = city['geonameid']
@@ -29,18 +31,18 @@ def merge_city_data(city, countries, alternatenames):
 	if len(localnames) > 0:
 		localname = localnames[0]['alternate name']
 	countryname = country['Country']
-	return {
-		'geonameid': geonameid,
-		'name': name,
-		'localname': localname,
-		'countryname': countryname,
-		'countrycode': countrycode,
-		'timezone': timezone,
-		'population': population,
-		'lang': lang,
-		'lng': lng,
-		'lat': lat
-	}
+	merged_data = OrderedDict()
+	merged_data['geonameid'] = geonameid
+	merged_data['name'] = name
+	merged_data['localname'] = localname
+	merged_data['population'] = population
+	merged_data['countryname'] = countryname
+	merged_data['countrycode'] = countrycode
+	merged_data['timezone'] = timezone
+	merged_data['lng'] = lng
+	merged_data['lat'] = lat
+	merged_data['lang'] = lang
+	return merged_data
 
 def merge_cities_data(cities, countries, alternatenames):
 	merged_data = []
