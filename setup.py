@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='hotcitiesdata',
-    version='0.0.1',
+    name='hotcities',
+    version='0.0.2',
     description='hotcities manager utils and scripts',
     author='Flavio Grandin',
     author_email='flavio.grandin@gmail.com',
