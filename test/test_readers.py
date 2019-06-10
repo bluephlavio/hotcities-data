@@ -1,6 +1,6 @@
 import pytest
 
-from manager.readers import read_fields, read_data
+from hotcities.readers import read_fields, read_data
 
 def test_read_fields(fields_file):
   fields = read_fields(fields_file)

@@ -1,7 +1,7 @@
 import pytest
 
-from manager.readers import load
-from manager.mergers import merge_city_data
+from hotcities.readers import load
+from hotcities.mergers import merge_city_data
 
 @pytest.fixture
 def data(config):

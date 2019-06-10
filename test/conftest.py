@@ -1,7 +1,11 @@
 import pytest
 import os.path
+import sys
 
-from manager.config import read_config
+here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, here)
+
+from hotcities.config import read_config
 
 @pytest.fixture(scope='session')
 def res_dir():

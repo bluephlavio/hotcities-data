@@ -1,7 +1,7 @@
 import pytest
 import os
 
-from manager.filters import is_bigger_than
+from hotcities.filters import is_bigger_than
 
 @pytest.fixture
 def cities():

@@ -1,6 +1,6 @@
 import pytest
 
-from manager.parsers import parse
+from hotcities.parsers import parse
 
 @pytest.fixture(params=[
   ('a', 'a'),
