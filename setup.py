@@ -13,8 +13,11 @@ setup(
             'hotcities=hotcities.cli:main',
         ],
     },
-    setup_requires=[
-        'pytest-runner'
+    install_requires=[
+        'pytest',
+        'pymongo',
+        'dnspython',
+        'python-dotenv'
     ],
     tests_require=[
         'pytest'
