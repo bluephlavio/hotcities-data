@@ -8,12 +8,15 @@ from .filters import is_bigger_than, is_relevant_alternatename_for_any_of
 from .readers import load
 
 def extract(args):
-	config = read_config(args.config_file) if args.config_file else default_config
+	config = read_config(args.config_file, section=args.section) if args.config_file else default_config
 	cities = load('cities', where=is_bigger_than(args.min_population), config=config)
 	geonameids = list(map(lambda city: city['geonameid'], cities))
 	countries = load('countries', config=config)
 	alternatenames = load('alternatenames', where=is_relevant_alternatename_for_any_of(geonameids), config=config)
-	data, fields = merge_cities_data(cities, countries, alternatenames)
+	def log(city, i, cities):
+		name = city['name']
+		print(f'{name}: {i+1} of {len(cities)}')
+	data, fields = merge_cities_data(cities, countries, alternatenames, hook=log)
 	if args.out_file:
 		with open(args.out_file, 'w', newline='', encoding='utf-8') as f:
 			writer = csv.DictWriter(f, fieldnames=fields)
@@ -33,6 +36,7 @@ def main():
 	extract_subparser.add_argument('--min-population', type=int, default=10000000)
 	extract_subparser.add_argument('--out-file', default=None)
 	extract_subparser.add_argument('--config-file', default=None)
+	extract_subparser.add_argument('--section', default='DEFAULT')
 	extract_subparser.set_defaults(func=extract)
 
 	args = parser.parse_args()

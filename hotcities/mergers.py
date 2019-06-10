@@ -44,8 +44,10 @@ def merge_city_data(city, countries, alternatenames):
 	merged_data['lang'] = lang
 	return merged_data
 
-def merge_cities_data(cities, countries, alternatenames):
+def merge_cities_data(cities, countries, alternatenames, hook=None):
 	merged_data = []
-	for city in cities:
+	for i, city in enumerate(cities):
 		merged_data.append(merge_city_data(city, countries, alternatenames))
+		if hook:
+			hook(city, i, cities)
 	return merged_data, merged_cities_data_fields
