@@ -33,7 +33,8 @@ def extract(args):
 
 def upload(args):
 	datafile = args.datafile
-	load_dotenv()
+	env_file = args.env_file
+	load_dotenv(dotenv_path=env_file)
 	connection = os.getenv('MONGODB_CONNECTION')
 	client = MongoClient(connection)
 	print('Connected to database...')
@@ -70,6 +71,7 @@ def main():
 
 	upload_subparser = subparsers.add_parser('upload')
 	upload_subparser.add_argument('datafile')
+	upload_subparser.add_argument('--env-file', default='.env')
 	upload_subparser.set_defaults(func=upload)
 
 	args = parser.parse_args()
