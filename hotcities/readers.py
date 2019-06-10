@@ -7,15 +7,15 @@ def read_fields(filename):
   with open(filename, encoding='utf-8') as f:
     return [line.strip() for line in f.readlines()]
 
-def read_data(data_file, fields_file, dialect='excel-tab', where=lambda x: True, hook=None):
-  fields = read_fields(fields_file)
+def read_data(data_file, fields_file=None, dialect='excel-tab', where=lambda x: True, hook=None):
+  fields = read_fields(fields_file) if fields_file else None
   with open(data_file, encoding='utf-8') as f:
     reader = csv.DictReader(f, fieldnames=fields, dialect=dialect, quoting=csv.QUOTE_NONE)
     rows = []
     i = 0
     for line in reader:
       row = {}
-      for field in fields:
+      for field in reader.fieldnames:
         row[field] = parse(line[field])
       if where and where(row):
         rows.append(row)
