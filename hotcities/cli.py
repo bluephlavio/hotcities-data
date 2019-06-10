@@ -6,17 +6,15 @@ from .config import read_config, default_config
 from .mergers import merge_cities_data
 from .filters import is_bigger_than, is_relevant_alternatename_for_any_of
 from .readers import load
+from .loggers import log_merging_cities, log_loading_cities, log_loading_countries, log_loading_alternatenames
 
 def extract(args):
 	config = read_config(args.config_file, section=args.section) if args.config_file else default_config
-	cities = load('cities', where=is_bigger_than(args.min_population), config=config)
+	cities = load('cities', where=is_bigger_than(args.min_population), hook=log_loading_cities, config=config)
 	geonameids = list(map(lambda city: city['geonameid'], cities))
-	countries = load('countries', config=config)
-	alternatenames = load('alternatenames', where=is_relevant_alternatename_for_any_of(geonameids), config=config)
-	def log(city, i, cities):
-		name = city['name']
-		print(f'{name}: {i+1} of {len(cities)}')
-	data, fields = merge_cities_data(cities, countries, alternatenames, hook=log)
+	countries = load('countries', hook=log_loading_countries, config=config)
+	alternatenames = load('alternatenames', where=is_relevant_alternatename_for_any_of(geonameids), hook=log_loading_alternatenames, config=config)
+	data, fields = merge_cities_data(cities, countries, alternatenames, hook=log_merging_cities)
 	if args.out_file:
 		with open(args.out_file, 'w', newline='', encoding='utf-8') as f:
 			writer = csv.DictWriter(f, fieldnames=fields)
