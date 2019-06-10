@@ -130,6 +130,6 @@ out/
 .vscode
 
 # big data files
-data/citiesdata.txt
-data/countriesdata.txt
-data/alternatenamesdata.txt
+data/cities.data.txt
+data/countries.data.txt
+data/alternatenames.data.txt
