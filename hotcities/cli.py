@@ -35,26 +35,30 @@ def upload(args):
 	datafile = args.datafile
 	env_file = args.env_file
 	load_dotenv(dotenv_path=env_file)
-	connection = os.getenv('MONGODB_CONNECTION')
-	client = MongoClient(connection)
-	print('Connected to database...')
-	db = client['hotcities-dev']
+	print('Secret keys loaded.')
+	db_connection = os.getenv('MONGODB_CONNECTION')
+	client = MongoClient(db_connection)
+	print('Connected to database.')
+	db_name = os.getenv('MONGODB_NAME')
+	db = client[db_name]
 	cities = db['cities']
 	docs = read_data(datafile, dialect='excel')
 	updated = 0
 	uploaded = 0
+	total = 0
 	for doc in docs:
 		geonameid = doc['geonameid']
 		name = doc['name']
 		old = cities.find_one({ 'geonameid': geonameid })
 		if old:
-			print(f'Updating {name}...')
+			print(f'Updating {name} ({total})...')
 			updated += 1
 		else:
-			print(f'Uploading {name}...')
+			print(f'Uploading {name} ({total})...')
 			uploaded += 1
+		total += 1
 		cities.find_one_and_replace({ 'geonameid': geonameid }, doc, upsert=True)
-	print(f'{uploaded} cities uploaded and {updated} updated')
+	print(f'{uploaded} cities uploaded and {updated} updated.')
 	client.close()
 	print('Database connection closed.')
 
@@ -71,7 +75,7 @@ def main():
 
 	upload_subparser = subparsers.add_parser('upload')
 	upload_subparser.add_argument('datafile')
-	upload_subparser.add_argument('--env-file', default='.env')
+	upload_subparser.add_argument('--env-file', default='.env.dev')
 	upload_subparser.set_defaults(func=upload)
 
 	args = parser.parse_args()
