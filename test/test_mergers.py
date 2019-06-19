@@ -1,18 +1,22 @@
 import pytest
 
 from hotcities.readers import load
-from hotcities.mergers import merge_city_data
+from hotcities.mergers import merge
+
 
 @pytest.fixture
 def data(config):
-	cities = load('cities', config=config)
-	countries = load('countries', config=config)
-	alternatenames = load('alternatenames', config=config)
-	return cities, countries, alternatenames
+    cities = load('cities', config=config)
+    countries = load('countries', config=config)
+    alternatenames = load('alternatenames', config=config)
+    return cities, countries, alternatenames
 
-def test_merge_city_data(data):
-	cities, countries, alternatenames = data
-	for city in cities:
-		merged_data = merge_city_data(city, countries, alternatenames)
-		assert merged_data['countrycode'] == 'AE'
-		assert merged_data['lang'] == 'ar'
+
+def test_merge(data):
+    cities, countries, alternatenames = data
+    merged_data = merge(cities, countries, alternatenames)
+    print(merged_data)
+    for i, row in merged_data.iterrows():
+        assert row['countrycode'] == 'AE'
+        assert row['countryname'] == 'United Arab Emirates'
+        assert row['lang'] == 'ar'

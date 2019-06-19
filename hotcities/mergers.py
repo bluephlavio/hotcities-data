@@ -1,53 +1,26 @@
-from collections import OrderedDict
+import pandas as pd
 
-from .filters import is_local_alternatename
+pd.options.mode.chained_assignment = None
 
-merged_cities_data_fields = [
-	'geonameid',
-	'name',
-	'localname',
-	'population',
-	'countryname',
-	'countrycode',
-	'timezone',
-	'lng',
-	'lat',
-	'lang'
-]
 
-def merge_city_data(city, countries, alternatenames):
-	geonameid = city['geonameid']
-	name = city['name']
-	countrycode = city['country code']
-	timezone = city['timezone']
-	population = city['population']
-	lng = city['longitude']
-	lat = city['latitude']
-	country, = (country for country in countries if country['ISO'] == countrycode)
-	languages = country['Languages'].split(',')
-	lang = languages[0][:2]
-	localnames = list(filter(is_local_alternatename(geonameid, lang), alternatenames))
-	localname = None
-	if len(localnames) > 0:
-		localname = localnames[0]['alternate name']
-	countryname = country['Country']
-	merged_data = OrderedDict()
-	merged_data['geonameid'] = geonameid
-	merged_data['name'] = name
-	merged_data['localname'] = localname
-	merged_data['population'] = population
-	merged_data['countryname'] = countryname
-	merged_data['countrycode'] = countrycode
-	merged_data['timezone'] = timezone
-	merged_data['lng'] = lng
-	merged_data['lat'] = lat
-	merged_data['lang'] = lang
-	return merged_data
-
-def merge_cities_data(cities, countries, alternatenames, hook=None):
-	merged_data = []
-	for i, city in enumerate(cities):
-		merged_data.append(merge_city_data(city, countries, alternatenames))
-		if hook:
-			hook(city, i, cities)
-	return merged_data, merged_cities_data_fields
+def merge(cities, countries, alternatenames):
+    cities = cities[['geonameid',
+                     'name', 'country code', 'population']]
+    cities.rename(lambda name: str(name).replace(
+        ' ', '').lower(), axis='columns', inplace=True)
+    countries = countries[['ISO', 'Country', 'Languages']]
+    countries.rename(lambda name: str(name).replace(
+        ' ', '').lower(), axis='columns', inplace=True)
+    countries.rename(
+        columns={'iso': 'countrycode', 'country': 'countryname', 'languages': 'lang'}, inplace=True)
+    countries['lang'] = countries['lang'].apply(
+        lambda langs: str(langs).split(',')[0][:2])
+    alternatenames = alternatenames[[
+        'geonameid', 'alternate name', 'isolanguage']]
+    alternatenames.rename(lambda name: str(name).replace(
+        ' ', '').lower(), axis='columns', inplace=True)
+    alternatenames.rename(
+        columns={'isolanguage': 'lang'}, inplace=True)
+    merged_data = cities.merge(countries, on='countrycode')
+    merged_data = merged_data.merge(alternatenames, on=['geonameid', 'lang'])
+    return merged_data
