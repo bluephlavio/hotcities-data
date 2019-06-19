@@ -16,6 +16,7 @@ def test_merge(data):
     cities, countries, alternatenames = data
     merged_data = merge(cities, countries, alternatenames)
     print(merged_data)
+		assert False
     for i, row in merged_data.iterrows():
         assert row['countrycode'] == 'AE'
         assert row['countryname'] == 'United Arab Emirates'

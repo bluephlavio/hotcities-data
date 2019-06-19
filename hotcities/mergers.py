@@ -22,5 +22,6 @@ def merge(cities, countries, alternatenames):
     alternatenames.rename(
         columns={'isolanguage': 'lang'}, inplace=True)
     merged_data = cities.merge(countries, on='countrycode')
-    merged_data = merged_data.merge(alternatenames, on=['geonameid', 'lang'])
+    merged_data = merged_data.merge(
+        alternatenames, how='inner', on=['geonameid', 'lang'])
     return merged_data
