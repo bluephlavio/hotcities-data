@@ -1,14 +1,17 @@
 import pytest
 
 from hotcities.readers import load
+from hotcities.filters import cities_filter, countries_filter, alternatenames_filter
 from hotcities.mergers import merge
 
 
 @pytest.fixture
 def data(config):
-    cities = load('cities', config=config)
-    countries = load('countries', config=config)
-    alternatenames = load('alternatenames', config=config)
+    cities = load('cities', filter=cities_filter(
+        min_population=100000), config=config)
+    countries = load('countries', filter=countries_filter(), config=config)
+    alternatenames = load(
+        'alternatenames', filter=alternatenames_filter(), config=config)
     return cities, countries, alternatenames
 
 
