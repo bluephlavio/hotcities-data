@@ -1,19 +1,19 @@
-ISO	
-ISO3	
-ISO-Numeric	
+countrycode
+iso3
+iso-numeric	
 fips	
-Country
-Capital
-Area(in sq km)	
-Population	
-Continent	
+countryname
+capital	
+area	
+population	
+continent	
 tld	
-CurrencyCode	
-CurrencyName	
-Phone	
-Postal Code Format	
-Postal Code Regex	
-Languages	
+currencycode	
+currencyname	
+phone	
+postalcodeformat	
+postalcoderegex	
+languages	
 geonameid	
 neighbours	
-EquivalentFipsCode
+equivalentfipscode

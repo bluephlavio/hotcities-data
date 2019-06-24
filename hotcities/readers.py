@@ -5,15 +5,19 @@ from .config import default_config
 
 def read_fields(fields_file):
     with open(fields_file, encoding='utf-8') as f:
-        return [line.strip() for line in f.readlines()]
+        fields = [line.strip() for line in f.readlines()]
+        return fields
 
 
-def read_data(data_file, fields_file=None, delimiter='\t'):
-    fields = read_fields(fields_file) if fields_file else None
-    return pd.read_csv(data_file, names=fields, header=None if fields else 0, delimiter=delimiter)
+def read_data(data_file, fields_file, delimiter='\t', **kwargs):
+    fields = read_fields(fields_file)
+    df = pd.read_csv(data_file, names=fields, header=None,
+                     delimiter=delimiter, **kwargs)
+    return df
 
 
-def load(table, config=default_config):
+def load(table, config=default_config, **kwargs):
     data_file = config[f'{table}data']
     fields_file = config[f'{table}fields']
-    return read_data(data_file, fields_file)
+    df = read_data(data_file, fields_file, **kwargs)
+    return df
