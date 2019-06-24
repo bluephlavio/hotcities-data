@@ -1,30 +1,52 @@
-def is_bigger_than(min_population):
-	return lambda city: city['population'] >= min_population
+import numpy as np
+import pandas as pd
 
-def is_alternatename_for(geonameid):
-	return lambda alternatename: alternatename['geonameid'] == geonameid
+cities_fields = [
+    'geonameid',
+    'name',
+    'countrycode',
+    'population',
+    'lat',
+    'lng',
+    'timezone'
+]
 
-def is_alternatename_for_any_of(geonameids):
-	return lambda alternatename: alternatename['geonameid'] in geonameids
+countries_fields = [
+    'countrycode',
+    'countryname',
+    'lang'
+]
 
-def is_relevant_alternatename(alternatename):
-	return (
-		alternatename['isShortName'] != 1 and 
-		alternatename['isHistoric'] != 1 and
-		alternatename['isColloquial'] != 1 and
-		alternatename['isolanguage'] != '' and
-		alternatename['isolanguage'] != 'link'
-	)
+alternatenames_fields = [
+    'geonameid',
+    'lang',
+    'alternatename'
+]
 
-def is_relevant_alternatename_for_any_of(geonameids):
-	return lambda alternatename: (
-		is_relevant_alternatename(alternatename) and
-		is_alternatename_for_any_of(geonameids)
-	)
 
-def is_local_alternatename(geonameid, language):
-		return lambda alternatename: (
-			alternatename['geonameid'] == geonameid and
-			alternatename['isolanguage'] == language
-		)
+def cities_filter(min_population=500000, columns=cities_fields):
+    def filter(df):
+        return df.loc[df['population'] >= min_population][columns]
+    return filter
 
+
+def filter_languages(languages):
+    return languages.split(',')[0][:2] if pd.notnull(languages) else np.nan
+
+
+def countries_filter(columns=countries_fields):
+    def filter(df):
+        df['lang'] = df['languages'].apply(filter_languages)
+        return df[columns]
+    return filter
+
+
+def alternatenames_filter(columns=alternatenames_fields):
+    def filter(df):
+        newdf = df.loc[pd.notnull(df['lang']) & (df['lang'] != 'link') & pd.isnull(
+            df['isshortname']) & pd.isnull(df['iscolloquial']) & pd.isnull(df['ishistoric'])]
+        newdf = newdf[columns]
+        newdf = newdf.groupby(['geonameid', 'lang']).agg(
+            {'alternatename': lambda series: list(series)[0]})
+        return newdf
+    return filter

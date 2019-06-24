@@ -9,15 +9,17 @@ def read_fields(fields_file):
         return fields
 
 
-def read_data(data_file, fields_file, delimiter='\t', **kwargs):
+def read_data(data_file, fields_file, delimiter='\t', filter=None, **kwargs):
     fields = read_fields(fields_file)
     df = pd.read_csv(data_file, names=fields, header=None,
                      delimiter=delimiter, **kwargs)
+    if filter:
+        return filter(df)
     return df
 
 
-def load(table, config=default_config, **kwargs):
+def load(table, config=default_config, filter=None, **kwargs):
     data_file = config[f'{table}data']
     fields_file = config[f'{table}fields']
-    df = read_data(data_file, fields_file, **kwargs)
+    df = read_data(data_file, fields_file, filter=filter, **kwargs)
     return df

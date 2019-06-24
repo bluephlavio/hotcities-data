@@ -1,34 +1,26 @@
 import argparse
-import sys
 import os
-import csv
+
 from pymongo import MongoClient
 from dotenv import load_dotenv
+import pandas as pd
+
 
 from .config import read_config, default_config
-from .mergers import merge_cities_data
-from .filters import is_bigger_than, is_relevant_alternatename_for_any_of
-from .readers import load, read_data
-from .loggers import log_merging_cities, log_loading_cities, log_loading_countries, log_loading_alternatenames
-
+from .readers import load
+from .filters import cities_filter, countries_filter, alternatenames_filter
+from .mergers import merge
 
 def extract(args):
 	config = read_config(args.config_file, section=args.section) if args.config_file else default_config
-	cities = load('cities', where=is_bigger_than(args.min_population), hook=log_loading_cities, config=config)
-	geonameids = list(map(lambda city: city['geonameid'], cities))
-	countries = load('countries', hook=log_loading_countries, config=config)
-	alternatenames = load('alternatenames', where=is_relevant_alternatename_for_any_of(geonameids), hook=log_loading_alternatenames, config=config)
-	data, fields = merge_cities_data(cities, countries, alternatenames, hook=log_merging_cities)
+	cities = load('cities', filter=cities_filter(min_population=args.min_population), config=config)
+	countries = load('countries', filter=countries_filter(), config=config)
+	alternatenames = load('alternatenames', filter=alternatenames_filter(), config=config)
+	data = merge(cities, countries, alternatenames)
 	if args.out_file:
-		with open(args.out_file, 'w', newline='', encoding='utf-8') as f:
-			writer = csv.DictWriter(f, fieldnames=fields)
-			writer.writeheader()
-			for city in data:
-				writer.writerow(city)
+		data.to_csv(args.out_file, index=False)
 	else:
-		for city in data:
-			values_list = list(map(lambda field: str(city[field]), fields))
-			print(','.join(values_list))
+		print(data.to_csv(index=False))
 
 
 def upload(args):
@@ -42,7 +34,7 @@ def upload(args):
 	db_name = os.getenv('MONGODB_NAME')
 	db = client[db_name]
 	cities = db['cities']
-	docs = read_data(datafile, dialect='excel')
+	docs = pd.read_csv(datafile)
 	updated = 0
 	uploaded = 0
 	total = 0
