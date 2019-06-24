@@ -2,18 +2,18 @@ geonameid
 name
 asciiname
 alternatenames
-latitude
-longitude
-feature class
-feature code
-country code
+lat
+lng
+featureclass
+featurecode
+countrycode
 cc2
-admin1 code
-admin2 code
-admin3 code
-admin4 code
+admin1code
+admin2code
+admin3code
+admin4code
 population
 elevation
 dem
 timezone
-modification date
+modificationdate

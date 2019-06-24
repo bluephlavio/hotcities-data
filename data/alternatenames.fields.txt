@@ -1,10 +1,10 @@
-alternateNameId
+alternatenameid
 geonameid
-isolanguage
-alternate name
-isPreferredName
-isShortName
-isColloquial
-isHistoric
+lang
+alternatename
+ispreferredname
+isshortname
+iscolloquial
+ishistoric
 from
 to
