@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='hotcities',
-    version='0.1.0',
+    version='0.1.1',
     description='hotcities manager utils and scripts',
     author='Flavio Grandin',
     author_email='flavio.grandin@gmail.com',
