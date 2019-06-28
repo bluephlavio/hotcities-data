@@ -8,3 +8,16 @@ def merge(cities, countries, alternatenames):
     df.rename(
         columns={'alternatename': 'localname'}, inplace=True)
     return df
+
+merged_data_dtypes = {
+    'geonameid': int,
+    'name': str,
+    'localname': str,
+    'population': int,
+    'countryname': str,
+    'countrycode': str,
+    'lng': float,
+    'lat': float,
+    'timezone': str,
+    'lang': str
+}

@@ -9,7 +9,7 @@ import pandas as pd
 from .config import read_config, default_config
 from .readers import load
 from .filters import cities_filter, countries_filter, alternatenames_filter
-from .mergers import merge
+from .mergers import merge, merged_data_dtypes
 
 
 def extract(args):
@@ -37,7 +37,9 @@ def upload(args):
     client = MongoClient(db_connection)
     db = client[db_name]
     print('Connected to database.')
-    cities = pd.read_csv(data_file).to_dict('records')
+    data = pd.read_csv(data_file, dtype=merged_data_dtypes)
+    data = data.where(data.notnull(), None)
+    cities = data.to_dict('records')
     for i, city in enumerate(cities):
         geonameid = city['geonameid']
         name = city['name']
