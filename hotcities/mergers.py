@@ -1,7 +1,5 @@
 import pandas as pd
 
-# pd.options.mode.chained_assignment = None
-
 
 def merge(cities, countries, alternatenames):
     cities_with_lang = pd.merge(cities, countries, on='countrycode')
