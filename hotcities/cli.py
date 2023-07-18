@@ -17,10 +17,14 @@ def extract(args):
         args.config_file, section=args.section) if args.config_file else default_config
     cities = load('cities', filter=cities_filter(
         min_population=args.min_population), config=config)
+    print(cities)
     countries = load('countries', filter=countries_filter(), config=config)
+    print(countries)
     alternatenames = load('alternatenames', filter=alternatenames_filter(
     ), config=config, low_memory=False)
+    print(alternatenames)
     data = merge(cities, countries, alternatenames)
+    print(data)
     if args.out_file:
         data.to_csv(args.out_file, index=False)
     else:

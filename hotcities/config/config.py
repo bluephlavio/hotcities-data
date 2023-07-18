@@ -12,7 +12,7 @@ def parse_file_path_value(file_path, config_file_path):
 entries = {
 	'citiesdata': (os.path.join(data_dir, 'cities.data.txt'), parse_file_path_value),
 	'citiesfields': (os.path.join(data_dir, 'cities.fileds.txt'), parse_file_path_value),
-	'countriesdata': (os.path.join(data_dir, 'coutries.data.txt'), parse_file_path_value),
+	'countriesdata': (os.path.join(data_dir, 'countries.data.txt'), parse_file_path_value),
 	'countriesfields': (os.path.join(data_dir, 'countries.fields.txt'), parse_file_path_value),
 	'alternatenamesdata': (os.path.join(data_dir, 'alternatenames.data.txt'), parse_file_path_value),
 	'alternatenamesfields': (os.path.join(data_dir, 'alternatenames.fields.txt'), parse_file_path_value)
