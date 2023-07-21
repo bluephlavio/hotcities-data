@@ -12,7 +12,7 @@ def read_fields(fields_file):
 def read_data(data_file, fields_file, delimiter='\t', filter=None, **kwargs):
     fields = read_fields(fields_file)
     df = pd.read_csv(data_file, names=fields, header=None,
-                     delimiter=delimiter, encoding=encoding, encoding_errors='ignore', **kwargs)
+                     delimiter=delimiter, encoding_errors='ignore', **kwargs)
     if filter:
         return filter(df)
     return df

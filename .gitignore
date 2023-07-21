@@ -133,3 +133,6 @@ out/
 data/cities.data.txt
 data/countries.data.txt
 data/alternatenames.data.txt
+
+# auth
+auth/**

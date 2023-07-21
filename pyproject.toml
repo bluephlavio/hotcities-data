@@ -12,17 +12,25 @@ pymongo = "^4.4.1"
 numpy = "^1.25.1"
 pandas = "^2.0.3"
 python-dotenv = "^1.0.0"
+click = "^8.1.5"
+google-api-python-client = "^2.94.0"
+google-cloud-vision = "^3.4.4"
+requests = "^2.31.0"
+flickrapi = "^2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-pylint = "^2.17.4"
 black = "^23.7.0"
 poethepoet = "^0.21.1"
+ipykernel = "^6.24.0"
+jupyter = "^1.0.0"
+pylint = "^2.17.4"
 
 [tool.poetry.scripts]
-hotcities = "hotcities.cli:main"
+hotcities = "hotcities.cli:cli"
 
 [tool.poe.tasks]
+lint = "pylint hotcities"
 test = "pytest test"
 
 [build-system]
